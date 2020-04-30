@@ -36,16 +36,21 @@ export default {
       window.open(`${article.url}`)
     },
     highlightBtn: function (e) {
-      e.target.previousElementSibling.classList.toggle('highlight')
-      e.target.previousElementSibling.classList.toggle('cursor')
-      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+      const text = e.target.previousElementSibling
+      text.classList.toggle('highlight')
+      text.classList.toggle('cursor')
+      if (text.classList.contains('highlight')) {
+        console.log(`The ${e.target.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+      } else {
+        console.log('Highlight has been disabled.')
+      }
     },
     highlight: function (e) {
       const selection = window.getSelection().toString()
       if (e.target.classList.contains('highlight') && selection) {
         this.timeStamp = new Date()
         this.highlights.push(selection)
-        console.log(this.highlights)
+        // console.log(this.highlights)
       }
     }
   },
