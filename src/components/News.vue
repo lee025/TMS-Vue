@@ -7,9 +7,10 @@
             class="card grow"
             :title="article.title"
             :img-src="article.urlToImage">
-            <b-card-text v-html="article.description">
+            <b-card-text @click="highlight" v-html="article.description">
               <!-- {{ article.description }} -->
             </b-card-text>
+            <b-button @click="highlightBtn">Highlight</b-button>
             <b-button @click="readMore(article)">Read More</b-button>
           </b-card>
         </div>
@@ -26,12 +27,26 @@ export default {
     return {
       apiKey: '3541fbfb60064ba4a89453bfdb61f3c9',
       articles: [],
-      errors: []
+      errors: [],
+      highlights: []
     }
   },
   methods: {
     readMore: function (article) {
       window.open(`${article.url}`)
+    },
+    highlightBtn: function (e) {
+      e.target.previousElementSibling.classList.toggle('highlight')
+      e.target.previousElementSibling.classList.toggle('cursor')
+      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+    },
+    highlight: function (e) {
+      const selection = window.getSelection().toString()
+      if (e.target.classList.contains('highlight') && selection) {
+        this.timeStamp = new Date()
+        this.highlights.push(selection)
+        console.log(this.highlights)
+      }
     }
   },
   created () {
@@ -43,6 +58,11 @@ export default {
       .catch(error => {
         this.errors.push(error)
       })
+  },
+  computed: {
+    currentRoute () {
+      return this.$route.name
+    }
   }
 }
 </script>
