@@ -35,4 +35,7 @@ export default {
   cursor: url('../src/assets/highlighter.svg'), auto;
   /* background-image: url('../src/assets/highlighter.svg'); */
 }
+.header-margin {
+  margin-top: 75px;
+}
 </style>

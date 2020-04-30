@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-cont header-margin">
     <b-container class="mb-3">
       <b-button-toolbar class="mb-3">
         <b-button-group>
@@ -56,8 +56,7 @@ export default {
       text.classList.toggle('highlight')
       text.classList.toggle('cursor')
       if (text.classList.contains('highlight')) {
-        console.log(`The ${e.target.value} button was clicked from the
-          ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+        console.log(`The ${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
       } else {
         console.log('Highlight has been disabled.')
       }
@@ -71,14 +70,12 @@ export default {
     },
     incFontSize: function incFontSize (e) {
       this.fontSize++
-      console.log(`${e.target.value} button was clicked from the
-        ${this.currentRoute} Page!`)
+      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     decFontSize: function decFontSize (e) {
       this.fontSize--
-      console.log(`${e.target.value} button was clicked from the
-        ${this.currentRoute} Page!`)
+      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     italics: function italics (e) {
@@ -87,8 +84,7 @@ export default {
       } else {
         this.fontStyle = 'normal'
       }
-      console.log(`${e.target.value} button was clicked from the
-        ${this.currentRoute} Page!`)
+      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
     },
     bold: function bold (e) {
       if (this.fontWeight === 'normal') {
@@ -96,8 +92,7 @@ export default {
       } else {
         this.fontWeight = 'normal'
       }
-      console.log(`${e.target.value} button was clicked from the
-        ${this.currentRoute} Page!`)
+      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
     }
   },
   computed: {
@@ -109,4 +104,7 @@ export default {
 </script>
 
 <style scoped>
+  .home-cont {
+    min-height: 100vh;
+  }
 </style>

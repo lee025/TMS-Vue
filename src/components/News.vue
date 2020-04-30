@@ -40,7 +40,7 @@ export default {
       text.classList.toggle('highlight')
       text.classList.toggle('cursor')
       if (text.classList.contains('highlight')) {
-        console.log(`The ${e.target.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+        console.log(`The ${e.currentTarget.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
       } else {
         console.log('Highlight has been disabled.')
       }
