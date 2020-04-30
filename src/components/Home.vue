@@ -1,15 +1,34 @@
 <template>
   <div>
     <b-container class="mb-3">
-      <b-button @click="incFontSize">Increase</b-button>
-      <b-button @click="decFontSize">Decrease</b-button>
-      <b-button @click="italics">Italicize</b-button>
-      <b-button @click="bold">Bold</b-button>
-      <p @click="highlight" v-bind:style="{ fontSize: fontSize + 'px', fontStyle: fontStyle, fontWeight: fontWeight }">
-        Small batch live-edge trust fund fingerstache, ethical fanny pack farm-to-table. Asymmetrical leggings flexitarian you probably haven't heard of them. Selfies cornhole disrupt hashtag, raclette lumbersexual freegan etsy. Mumblecore knausgaard palo santo retro YOLO la croix adaptogen, kinfolk church-key dreamcatcher.
-        Tacos mustache brooklyn asymmetrical four dollar toast. Sustainable whatever blue bottle williamsburg kickstarter tofu, letterpress affogato. Man braid palo santo blue bottle photo booth tacos vice, succulents XOXO. Roof party tumeric letterpress, poutine keytar stumptown brooklyn forage live-edge next level kickstarter flannel. Austin mumblecore fixie yuccie.
+      <b-button-toolbar class="mb-3">
+        <b-button-group>
+          <b-button @click="incFontSize" value="Font Increase"><i class="fas fa-font"/></b-button>
+          <b-button @click="decFontSize" value="Font Decrease"><i class="fas fa-font fa-xs"/></b-button>
+          <b-button @click="italics" value="Italicize"><i class="fas fa-italic"/></b-button>
+          <b-button @click="bold" value="Bold"><i class="fas fa-bold"/></b-button>
+          <b-button @click="highlightBtn" value="Highlight"><i class="fas fa-highlighter"/></b-button>
+        </b-button-group>
+      </b-button-toolbar>
+      <p
+        id="text"
+        @click="highlight"
+        v-bind:style="{
+          fontSize: fontSize + 'px',
+          fontStyle: fontStyle,
+          fontWeight: fontWeight
+        }">
+        Small batch live-edge trust fund fingerstache, ethical fanny pack farm-to-table.
+        Asymmetrical leggings flexitarian you probably haven't heard of them. Selfies
+        cornhole disrupt hashtag, raclette lumber freegan etsy. Mumblecore knausgaard
+        palo santo retro YOLO la croix adaptogen, kinfolk church-key dreamcatcher.
+        <br/>
+        Tacos mustache brooklyn asymmetrical four dollar toast. Sustainable whatever blue
+        bottle williamsburg kickstarter tofu, letterpress affogato. Man braid palo santo blue
+        bottle photo booth tacos vice, succulents XOXO. Roof party tumeric letterpress, poutine
+        keytar stumptown brooklyn forage live-edge next level kickstarter flannel. Austin
+        mumblecore fixie yuccie.
       </p>
-      <b-button @click="highlightBtn">Highlight</b-button>
     </b-container>
     <b-container v-for="text in highlighted.slice().reverse()" :key="text.id">
       <b-card>
@@ -33,15 +52,15 @@ export default {
   },
   methods: {
     highlightBtn: function highlightBtn (e) {
-      const text = e.target.previousElementSibling
+      const text = document.getElementById('text')
       text.classList.toggle('highlight')
-      e.target.parentElement.classList.toggle('cursor')
+      text.classList.toggle('cursor')
       if (text.classList.contains('highlight')) {
-        console.log(`The ${e.target.textContent} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+        console.log(`The ${e.target.value} button was clicked from the
+          ${this.currentRoute} Page! You can now hightlight text by selecting.`)
       } else {
         console.log('Highlight has been disabled.')
       }
-      // const fullText = e.target.previousElementSibling.textContent
     },
     highlight: function highlight (e) {
       const selection = window.getSelection().toString()
@@ -52,12 +71,14 @@ export default {
     },
     incFontSize: function incFontSize (e) {
       this.fontSize++
-      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page!`)
+      console.log(`${e.target.value} button was clicked from the
+        ${this.currentRoute} Page!`)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     decFontSize: function decFontSize (e) {
       this.fontSize--
-      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page!`)
+      console.log(`${e.target.value} button was clicked from the
+        ${this.currentRoute} Page!`)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     italics: function italics (e) {
@@ -66,7 +87,8 @@ export default {
       } else {
         this.fontStyle = 'normal'
       }
-      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page!`)
+      console.log(`${e.target.value} button was clicked from the
+        ${this.currentRoute} Page!`)
     },
     bold: function bold (e) {
       if (this.fontWeight === 'normal') {
@@ -74,7 +96,8 @@ export default {
       } else {
         this.fontWeight = 'normal'
       }
-      console.log(`${e.target.textContent} button was clicked from the ${this.currentRoute} Page!`)
+      console.log(`${e.target.value} button was clicked from the
+        ${this.currentRoute} Page!`)
     }
   },
   computed: {
