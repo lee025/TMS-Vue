@@ -32,7 +32,7 @@ export default {
   color: white;
 }
 .cursor {
-  cursor: url('../src/assets/highlighter.svg'), auto;
+  cursor: url('../src/assets/highlighter.svg') 5 15, auto;
   /* background-image: url('../src/assets/highlighter.svg'); */
 }
 .header-margin {

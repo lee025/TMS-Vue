@@ -16,3 +16,4 @@
   * [NewsAPI Walkthrough](https://buttercms.com/blog/build-a-beautiful-animated-news-app-with-vuejs-and-vuetify)
   * [MDN:Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
   * [Vue Class & Style Bindings](https://vuejs.org/v2/guide/class-and-style.html)
+  * [Hipster Ipsum](https://hipsum.co/)
