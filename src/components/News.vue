@@ -2,6 +2,7 @@
   <div>
     <b-container fluid>
       <b-row>
+        <Highlights v-bind:highlights="highlights"/>
         <div v-for="article in articles" :key="article.title" class="mx-auto">
           <b-card
             class="card grow"
@@ -21,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import Highlights from './Highlights'
 export default {
   name: 'News',
   data () {
@@ -30,6 +32,9 @@ export default {
       errors: [],
       highlights: []
     }
+  },
+  components: {
+    Highlights
   },
   methods: {
     readMore: function (article) {
@@ -48,8 +53,8 @@ export default {
     highlight: function (e) {
       const selection = window.getSelection().toString()
       if (e.target.classList.contains('highlight') && selection) {
-        this.timeStamp = new Date()
-        this.highlights.push(selection)
+        const timeStamp = new Date()
+        this.highlights.push({ timeStamp: timeStamp, text: selection })
       }
     }
   },

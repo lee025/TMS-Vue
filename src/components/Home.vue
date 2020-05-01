@@ -40,7 +40,9 @@
 </template>
 
 <script>
+// import Highlights from './Highlights'
 export default {
+  props: ['highlights'],
   data () {
     return {
       highlighted: [],
