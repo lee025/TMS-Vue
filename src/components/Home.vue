@@ -51,12 +51,15 @@ export default {
     }
   },
   methods: {
+    log: function log (e) {
+      console.log(`The '${e.currentTarget.value}' button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+    },
     highlightBtn: function highlightBtn (e) {
       const text = document.getElementById('text')
       text.classList.toggle('highlight')
       text.classList.toggle('cursor')
       if (text.classList.contains('highlight')) {
-        console.log(`The ${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+        this.log(e)
       } else {
         console.log('Highlight has been disabled.')
       }
@@ -70,12 +73,12 @@ export default {
     },
     incFontSize: function incFontSize (e) {
       this.fontSize++
-      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
+      this.log(e)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     decFontSize: function decFontSize (e) {
       this.fontSize--
-      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
+      this.log(e)
       console.log(`Current Font Size: ${this.fontSize}`)
     },
     italics: function italics (e) {
@@ -84,7 +87,7 @@ export default {
       } else {
         this.fontStyle = 'normal'
       }
-      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
+      this.log(e)
     },
     bold: function bold (e) {
       if (this.fontWeight === 'normal') {
@@ -92,7 +95,7 @@ export default {
       } else {
         this.fontWeight = 'normal'
       }
-      console.log(`${e.currentTarget.value} button was clicked from the ${this.currentRoute} Page!`)
+      this.log(e)
     }
   },
   computed: {

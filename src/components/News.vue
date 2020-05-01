@@ -50,7 +50,6 @@ export default {
       if (e.target.classList.contains('highlight') && selection) {
         this.timeStamp = new Date()
         this.highlights.push(selection)
-        // console.log(this.highlights)
       }
     }
   },
@@ -58,7 +57,6 @@ export default {
     axios.get('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.apiKey)
       .then(res => {
         this.articles = res.data.articles
-        // console.log('data:', res.data.articles)
       })
       .catch(error => {
         this.errors.push(error)

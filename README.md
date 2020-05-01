@@ -1,21 +1,13 @@
-# tms-vue
+# Ten Mile Square-Vue Project
 
 > A Vue.js project
 
-## Build Setup
+## Tools/Tutorials Used
 
-``` bash
-# install dependencies
-npm install
+  * [Vue-Router](https://medium.com/codingthesmartway-com-blog/vue-js-routing-with-vue-router-4c428fabb078)
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+  * [Bootstrap-Vue](https://bootstrap-vue.org/docs)
+  * [NewsAPI](https://newsapi.org/)
+  * [NewsAPI Walkthrough](https://buttercms.com/blog/build-a-beautiful-animated-news-app-with-vuejs-and-vuetify)
+  * [MDN:Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
+  * [Vue Class & Style Bindings](https://vuejs.org/v2/guide/class-and-style.html)
