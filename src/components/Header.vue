@@ -14,6 +14,7 @@
         </b-nav-text>
       </b-navbar-nav>
     </b-collapse>
+    <b-button v-b-toggle.sidebar-right>View Highlights</b-button>
   </b-navbar>
 </template>
 

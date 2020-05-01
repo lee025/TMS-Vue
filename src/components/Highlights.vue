@@ -1,9 +1,8 @@
 <template>
   <div>
-    <b-button v-b-toggle.sidebar-right>View Highlights</b-button>
     <b-sidebar id="sidebar-right" title="Highlights" right shadow>
       <div class="px-3 py-2">
-        <b-container v-for="blurb in highlights" :key="blurb.id">
+        <b-container v-for="blurb in highlights.slice().reverse()" :key="blurb.id">
           <b-card>
             <b-card-text>{{ blurb.text }}</b-card-text>
             <small>{{ blurb.timeStamp }}</small>
