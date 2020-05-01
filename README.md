@@ -2,6 +2,11 @@
 
 > A Vue.js project
 
+## Getting Started
+  * Clone the repo
+  * `npm install`
+  * run `npm run serve` to get started!
+
 ## Tools/Tutorials Used
 
   * [Vue-Router](https://medium.com/codingthesmartway-com-blog/vue-js-routing-with-vue-router-4c428fabb078)
