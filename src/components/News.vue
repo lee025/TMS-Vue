@@ -67,7 +67,9 @@ export default {
     axios.get('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.apiKey)
       .then(res => {
         // this.articles = res.data.articles
-        this.articles = res.data.articles.slice(2, -1)
+        const response = res.data.articles.slice(1, -1)
+        this.articles = response.filter(article =>
+          article.author !== null && article.description !== null)
       })
       .catch(error => {
         this.errors.push(error)

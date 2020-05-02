@@ -4,12 +4,12 @@
       <h4 class="mb-2">Your Highlights</h4>
       <section class='d-flex justify-content-around'>
         <div>
-          <h3>{{ highlights.length }}</h3>
-          <div>Highlight(s)</div>
+          <h3 class="mb-0">{{ highlights.length }}</h3>
+          <small>HIGHLIGHT(S)</small>
         </div>
         <div>
-          <h3>{{ highlights | totalBlurbs }}</h3>
-          <div>Article(s)</div>
+          <h3 class="mb-0">{{ highlights | totalBlurbs }}</h3>
+          <small>ARTICLE(S)</small>
         </div>
       </section>
       <div class="px-3 py-2">
@@ -18,7 +18,7 @@
             <i @click="deleteHighlight(highlights, idx)"
               class="fas fa-eraser d-flex justify-content-end mb-2"/>
             <b-card-sub-title>
-              <b-link :href="blurb.url">{{ blurb.title }}</b-link>
+              <b-link @click="readMore(blurb)">{{ blurb.title }}</b-link>
             </b-card-sub-title>
             <b-card-text class="my-2"><i>{{ blurb.text }}</i></b-card-text>
             <span class="ft-sm">{{ blurb.timeStamp }}</span>
@@ -62,4 +62,41 @@ export default {
   .ft-sm {
     font-size: 10px;
   }
+  a {
+    color:#343a40;
+    text-decoration: none;
+    filter: brightness(150%);
+  }
+  a:hover {
+    filter:brightness(5%);
+  }
+  .fa-eraser {
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+  }
+  .fa-eraser:hover {
+    filter: invert(75%) brightness(85%);
+    transform: scale(.98);
+  }
+  /* .fa-eraser {
+    cursor: pointer;
+    color:#343a40;
+    background: white;
+    margin-left: 85%;
+    width: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: all 0.4s ease 0s;
+  }
+  .fa-eraser:hover {
+    background:#6c757d;
+    color: #f8f9fa;
+    letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;
+  } */
+
 </style>
