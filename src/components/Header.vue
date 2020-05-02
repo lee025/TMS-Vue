@@ -14,7 +14,7 @@
         </b-nav-text>
       </b-navbar-nav>
     </b-collapse>
-    <b-button v-b-toggle.sidebar-right>View Highlights</b-button>
+    <b-button v-if="$route.name !== 'Home'" size="sm" v-b-toggle.sidebar-right>View Highlights</b-button>
   </b-navbar>
 </template>
 
@@ -24,4 +24,8 @@ export default {
 </script>
 
 <style scoped>
+  a:hover {
+    text-decoration: none;
+    filter:brightness(85%)
+  }
 </style>

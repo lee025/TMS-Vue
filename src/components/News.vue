@@ -3,12 +3,12 @@
     <b-container fluid>
       <b-row>
         <Highlights v-bind:highlights="highlights"/>
-        <div v-for="article in articles" :key="article.title" class="mx-auto">
+        <div v-for="(article, idx) in articles" :key="`article-${idx}`" class="mx-auto">
           <b-card
             class="card grow"
             :title="article.title"
             :img-src="article.urlToImage">
-            <b-card-text @click="highlight" v-html="article.description">
+            <b-card-text @click="highlight(article, $event)" v-html="article.description">
               <!-- {{ article.description }} -->
             </b-card-text>
             <b-button @click="highlightBtn">Highlight</b-button>
@@ -50,18 +50,24 @@ export default {
         console.log('Highlight has been disabled.')
       }
     },
-    highlight: function (e) {
+    highlight: function (article, $event) {
       const selection = window.getSelection().toString()
-      if (e.target.classList.contains('highlight') && selection) {
+      if ($event.target.classList.contains('highlight') && selection) {
         const timeStamp = new Date()
-        this.highlights.push({ timeStamp: timeStamp, text: selection })
+        JSON.parse(JSON.stringify(this.highlights.unshift({
+          timeStamp: timeStamp,
+          text: selection,
+          title: article.title,
+          url: article.url
+        })))
       }
     }
   },
   created () {
     axios.get('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.apiKey)
       .then(res => {
-        this.articles = res.data.articles
+        // this.articles = res.data.articles
+        this.articles = res.data.articles.slice(2, -1)
       })
       .catch(error => {
         this.errors.push(error)
