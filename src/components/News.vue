@@ -12,7 +12,7 @@
               <!-- {{ article.description }} -->
             </b-card-text>
             <b-button @click="highlightBtn">Highlight</b-button>
-            <b-button @click="readMore(article)">Read More</b-button>
+            <b-button @click="readMore(article.url)">Read More</b-button>
           </b-card>
         </div>
       </b-row>
@@ -23,6 +23,7 @@
 <script>
 import axios from 'axios'
 import Highlights from './Highlights'
+import mixin from '../mixins/mixins'
 export default {
   name: 'News',
   data () {
@@ -36,10 +37,8 @@ export default {
   components: {
     Highlights
   },
+  mixins: [mixin],
   methods: {
-    readMore: function (article) {
-      window.open(`${article.url}`)
-    },
     highlightBtn: function (e) {
       const text = e.target.previousElementSibling
       text.classList.toggle('highlight')
@@ -66,10 +65,9 @@ export default {
   created () {
     axios.get('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.apiKey)
       .then(res => {
-        // this.articles = res.data.articles
-        const response = res.data.articles.slice(1, -1)
+        const response = res.data.articles
         this.articles = response.filter(article =>
-          article.author !== null && article.description !== null)
+          article.urlToImage !== null && article.description !== null)
       })
       .catch(error => {
         this.errors.push(error)

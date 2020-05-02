@@ -18,7 +18,7 @@
             <i @click="deleteHighlight(highlights, idx)"
               class="fas fa-eraser d-flex justify-content-end mb-2"/>
             <b-card-sub-title>
-              <b-link @click="readMore(blurb)">{{ blurb.title }}</b-link>
+              <b-link @click="readMore(blurb.url)">{{ blurb.title }}</b-link>
             </b-card-sub-title>
             <b-card-text class="my-2"><i>{{ blurb.text }}</i></b-card-text>
             <span class="ft-sm">{{ blurb.timeStamp }}</span>
@@ -30,12 +30,11 @@
 </template>
 
 <script>
+import mixin from '../mixins/mixins'
 export default {
   props: ['highlights'],
+  mixins: [mixin],
   methods: {
-    readMore: function (blurb) {
-      window.open(`${blurb.url}`)
-    },
     deleteHighlight: function (highlights, idx) {
       highlights = highlights.splice(idx, 1)
       return highlights
