@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     log: function log (e) {
-      console.log(`The '${e.currentTarget.value}' button was clicked from the ${this.currentRoute} Page! You can now hightlight text by selecting.`)
+      console.log(`The '${e.currentTarget.value}' button was clicked from the ${this.currentRoute} Page!`)
     },
     highlightBtn: function highlightBtn (e) {
       const text = document.getElementById('text')

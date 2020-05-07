@@ -1,6 +1,13 @@
 <template>
   <div>
     <b-container fluid>
+      <b-container>
+        <h1 class="brand">NewsAPI</h1>
+        <div class="brand-content">
+          <div class="font-weight-bold text-left">{{ currentDate() }}</div>
+        </div>
+        <div class="brand-border-bottom"></div>
+      </b-container>
       <b-row>
         <Highlights v-bind:highlights="highlights"/>
         <div v-for="(article, idx) in articles" :key="`article-${idx}`" class="mx-auto">
@@ -60,6 +67,18 @@ export default {
           url: article.url
         })))
       }
+    },
+    currentDate: function () {
+      let date = new Date()
+      let monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ]
+      let month = monthNames[date.getMonth()]
+      let day = date.getDate()
+      let year = date.getFullYear()
+
+      return month + ' ' + day + ', ' + year
     }
   },
   created () {
@@ -91,5 +110,19 @@ export default {
   }
   .grow:hover {
     transform: scale(1.025);
+  }
+  .brand {
+    /* font-family: 'Gravitas One'; */
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    font-size: 3rem;
+    letter-spacing: -4.5px;
+    font-variant: small-caps;
+    font-weight: 700;
+  }
+  .brand-content {
+
+  }
+  .brand-border-bottom {
+    border-bottom: 3px solid #343a40;
   }
 </style>
