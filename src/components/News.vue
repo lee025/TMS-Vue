@@ -3,28 +3,9 @@
     <b-container fluid>
       <b-container>
         <h1 class="brand">NewsAPI</h1>
-          <!-- Refactor Later -->
-          <b-row align-h="between" class="brand-content mx-1">
-            <div class="font-weight-bold">{{ currentDate() }}</div>
-            <div class="row brand-content">
-              <div class="icon">
-                <img v-if="weatherIcon" v-bind:src="`http://openweathermap.org/img/w/${weatherIcon}.png`"/>
-              </div>
-              <div class="temperature">
-                <div class="degree-section">
-                  <div class="temp-degree" v-if="weather.main"><strong>{{ weather.main.temp }}°</strong></div>
-                  <span>F</span>
-                </div>
-              </div>
-              <div class="location">
-                <div class="time-zone">{{ weather.name }}</div>
-              </div>
-            </div>
-          </b-row>
-          <!--  -->
-
+        <NewsMasthead v-bind:weather="weather" v-bind:weatherIcon="weatherIcon"/>
       </b-container>
-        <div class="brand-border-bottom"></div>
+      <div class="brand-border-bottom"></div>
       <b-row>
         <Highlights v-bind:highlights="highlights"/>
         <div v-for="(article, idx) in articles" :key="`article-${idx}`" class="mx-auto">
@@ -45,6 +26,7 @@
 
 <script>
 import Highlights from './Highlights'
+import NewsMasthead from './NewsMasthead'
 import mixin from '../mixins/mixins'
 export default {
   name: 'News',
@@ -64,7 +46,8 @@ export default {
     }
   },
   components: {
-    Highlights
+    Highlights,
+    NewsMasthead
   },
   mixins: [mixin],
   methods: {
@@ -89,18 +72,6 @@ export default {
           url: article.url
         })))
       }
-    },
-    currentDate: function () {
-      let date = new Date()
-      let monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-      ]
-      let month = monthNames[date.getMonth()]
-      let day = date.getDate()
-      let year = date.getFullYear()
-
-      return month + ' ' + day + ', ' + year
     },
     getWeather: function () {
       fetch(`${this.weatherUrlBase}weather?lat=${this.lat}&lon=${this.long}&units=imperial&appid=` + this.weatherApiKey)
@@ -142,7 +113,8 @@ export default {
 <style scoped>
   .card {
     max-width: 25rem;
-    margin: 2rem;
+    margin: 1rem;
+    box-shadow: 0px 6px 6px -1px rgba(0,0,0,0.4);
   }
   .grow {
     transition: all .1s ease-in;
@@ -157,15 +129,6 @@ export default {
     letter-spacing: -4.5px;
     font-variant: small-caps;
     font-weight: 700;
-  }
-  .brand-content {
-    font-size: 14px;
-    align-items: center;
-  }
-  .degree-section {
-    display: flex;
-    align-items: center;
-    margin-right: .5rem;
   }
   .brand-border-bottom {
     border-bottom: 2px solid #343a40;
