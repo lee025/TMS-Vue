@@ -77,25 +77,4 @@ export default {
     filter: invert(75%) brightness(85%);
     transform: scale(.98);
   }
-  /* .fa-eraser {
-    cursor: pointer;
-    color:#343a40;
-    background: white;
-    margin-left: 85%;
-    width: fit-content;
-    padding: 5px;
-    border-radius: 5px;
-    display: inline-block;
-    transition: all 0.4s ease 0s;
-  }
-  .fa-eraser:hover {
-    background:#6c757d;
-    color: #f8f9fa;
-    letter-spacing: 1px;
-    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
-    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
-    transition: all 0.4s ease 0s;
-  } */
-
 </style>
