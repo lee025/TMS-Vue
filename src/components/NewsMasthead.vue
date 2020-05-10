@@ -161,6 +161,12 @@ export default {
     align-items: center;
     height: 2.5rem;
   }
+  .icon {
+    filter: grayscale(100%);
+  }
+  .icon img {
+    max-height: 2rem;
+  }
   .degree-section {
     display: flex;
     align-items: center;

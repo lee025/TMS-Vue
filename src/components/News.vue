@@ -116,9 +116,13 @@ export default {
 
 <style scoped>
   .card {
-    max-width: 25rem;
+    max-width: 20rem;
+    max-width: 20rem;
     margin: 1rem;
     box-shadow: 0px 6px 6px -1px rgba(0,0,0,0.4);
+  }
+  .card-title {
+    font-size: 1.2rem;
   }
   .grow {
     transition: all .1s ease-in;
@@ -130,11 +134,5 @@ export default {
     border-bottom: 2px solid #343a40;
     margin: auto;
     width: 95%;
-  }
-  .icon {
-    filter: grayscale(100%);
-  }
-  .icon img {
-    max-height: 2rem;
   }
 </style>
