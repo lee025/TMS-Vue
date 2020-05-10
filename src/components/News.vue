@@ -2,8 +2,11 @@
   <div>
     <b-container fluid>
       <b-container>
-        <h1 class="brand">NewsAPI</h1>
-        <NewsMasthead v-bind:weather="weather" v-bind:weatherIcon="weatherIcon"/>
+        <NewsMasthead
+          v-bind:weather="weather"
+          v-bind:weatherIcon="weatherIcon"
+          v-bind:ip="ip"
+        />
       </b-container>
       <div class="brand-border-bottom"></div>
       <b-row>
@@ -74,11 +77,12 @@ export default {
       }
     },
     getWeather: function () {
-      fetch(`${this.weatherUrlBase}weather?lat=${this.lat}&lon=${this.long}&units=imperial&appid=` + this.weatherApiKey)
+      fetch(`${this.weatherUrlBase}onecall?lat=${this.lat}&lon=${this.long}&units=imperial&appid=` + this.weatherApiKey)
         .then(res => res.json())
         .then(res => {
           this.weather = res
-          this.weatherIcon = res.weather[0].icon
+          this.weatherIcon = res.current.weather[0].icon
+          console.log(this.weather)
         })
     }
   },
@@ -121,14 +125,6 @@ export default {
   }
   .grow:hover {
     transform: scale(1.025);
-  }
-  .brand {
-    /* font-family: 'Gravitas One'; */
-    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
-    font-size: 3rem;
-    letter-spacing: -4.5px;
-    font-variant: small-caps;
-    font-weight: 700;
   }
   .brand-border-bottom {
     border-bottom: 2px solid #343a40;
