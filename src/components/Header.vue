@@ -9,12 +9,15 @@
         <b-nav-text class="mr-2">
           <router-link to="/home">Home</router-link>
         </b-nav-text>
-        <b-nav-text>
+        <b-nav-text class="mr-2">
           <router-link to="/news">News</router-link>
+        </b-nav-text>
+        <b-nav-text>
+          <router-link to="/grid">Grid</router-link>
         </b-nav-text>
       </b-navbar-nav>
     </b-collapse>
-    <b-button v-if="$route.name !== 'Home'" size="sm" v-b-toggle.sidebar-right>View Highlights</b-button>
+    <b-button v-if="$route.name === 'News'" size="sm" v-b-toggle.sidebar-right>View Highlights</b-button>
   </b-navbar>
 </template>
 

@@ -16,7 +16,9 @@
             class="card grow"
             :title="article.title"
             :img-src="article.urlToImage">
-            <b-card-text @click="highlight(article, $event)" v-html="article.description">
+            <b-card-text
+              @click="highlight(article, $event)"
+              v-html="article.description.replace(/(<([^>]+)>)/ig, '')">
             </b-card-text>
             <b-button @click="highlightBtn">Highlight</b-button>
             <b-button @click="readMore(article.url)">Read More</b-button>
@@ -82,23 +84,28 @@ export default {
         .then(res => {
           this.weather = res
           this.weatherIcon = res.current.weather[0].icon
-          console.log(this.weather)
+          // console.log(this.weather)
         })
     }
   },
   async created () {
     await Promise.all([
       fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
+      // fetch('http://newsapi.org/v2/everything?domains=wsj.com&apiKey=' + this.newsApiKey),
       fetch('https://ipapi.co/json')
     ])
       .then(async ([newsApi, ipApi]) => {
         const news = await newsApi.json()
         const ip = await ipApi.json()
+        console.log(news)
         return [news, ip]
       })
       .then(response => {
         this.articles = response[0].articles.filter(data =>
-          data.urlToImage !== null && data.description !== null)
+          data.urlToImage !== null &&
+          data.description !== null &&
+          data.description !== ''
+        )
         this.ip = response[1]
         this.lat = response[1].latitude
         this.long = response[1].longitude

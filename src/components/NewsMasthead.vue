@@ -6,7 +6,7 @@
       <small>- WashingtonPost</small>
     </div>
     <b-row align-h="between" class="brand-content mx-1">
-      <div class="font-weight-bold">{{ currentDate() }}</div>
+      <div class="font-weight-bold">{{ currentDate }}</div>
       <div class="row brand-content">
         <div class="icon">
           <img v-if="weatherIcon" v-bind:src="`${iconURLBase}${weatherIcon}.png`"/>
@@ -93,18 +93,6 @@ export default {
     }
   },
   methods: {
-    currentDate: function () {
-      let date = new Date()
-      let monthNames = [
-        'January', 'February', 'March', 'April', 'May', 'June',
-        'July', 'August', 'September', 'October', 'November', 'December'
-      ]
-      let month = monthNames[date.getMonth()]
-      let day = date.getDate()
-      let year = date.getFullYear()
-
-      return month + ' ' + day + ', ' + year
-    },
     range: function () {
       return this.weather.daily.slice(2, 7)
     },
@@ -138,6 +126,20 @@ export default {
       let point = parseInt(degree / 45)
       return cardinalPoints[point]
     }
+  },
+  computed: {
+    currentDate: function () {
+      let date = new Date()
+      let monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ]
+      let month = monthNames[date.getMonth()]
+      let day = date.getDate()
+      let year = date.getFullYear()
+
+      return month + ' ' + day + ', ' + year
+    }
   }
 }
 </script>
@@ -162,7 +164,7 @@ export default {
     height: 2.5rem;
   }
   .icon {
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
   }
   .icon img {
     max-height: 2rem;

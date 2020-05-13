@@ -24,8 +24,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background: #f1f1f1;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 4rem;
 }
 .highlight::selection {
   background: #375d72;
