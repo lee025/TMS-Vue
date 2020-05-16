@@ -18,4 +18,5 @@
   * [Vue Class & Style Bindings](https://vuejs.org/v2/guide/class-and-style.html)
   * [Hipster Ipsum](https://hipsum.co/)
   * [ipapi](https://ipapi.com/)
-  * [OpenWeather](https://openweathermap.org/api)
+  * [ipify API](https://www.ipify.org/)
+  * [OpenWeather API](https://openweathermap.org/api)

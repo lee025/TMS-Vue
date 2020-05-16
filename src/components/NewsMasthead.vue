@@ -33,8 +33,8 @@
         </div>
       </div>
     </b-row>
-    <b-collapse id="collapse-1" class="mt-2">
-<!--  -->
+    <b-collapse ref="dd" id="collapse-1" class="mt-2 mb-2">
+<!-- Weather DropDown -->
       <b-container>
         <b-card v-if="weather.daily">
           <div class="row">
@@ -55,10 +55,10 @@
             </b-col>
             <b-col> <!--2 of 3 -->
               <b-container>
-                <b-row >
-                    <b-card-text v-for="(day, idx) in range()" :key="`daily-${idx}`">
+                <b-row>
+                    <b-card-text class="rt-border five-day" v-for="(day, idx) in range()" :key="`daily-${idx}`">
                       <b-col class="px-0"> <!-- col -->
-                          <b-card class="right-border">
+                          <b-card>
                             <div><strong>{{ getDay(day) }}</strong></div>
                             <div><img
                               v-if="weatherIcon"
@@ -106,7 +106,6 @@ export default {
         'Friday',
         'Saturday'
       ]
-
       return unabridgedDay[new Date(day.dt * 1000).getDay().toString()]
     },
     cardinalDirections (degree) {
@@ -177,7 +176,7 @@ export default {
   .card {
     border: none;
   }
-  .right-border {
+  .rt-border {
     border-right: 1px solid rgba(0,0,0,0.125)
   }
   .caret {
@@ -188,4 +187,20 @@ export default {
   :not(.collapsed) > .closed {
     display: none;
   }
+  #collapse-1 {
+    max-width: 930px;
+    margin: auto;
+  }
+  .five-day:last-child {
+    border-right: none;
+  }
+
+  @media screen and (max-width: 990px) {
+    #collapse-1 {
+        display: none;
+    }
+    .caret {
+      display: none;
+    }
+}
 </style>
