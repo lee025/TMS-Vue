@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="location">
-          <div class="mr-1">{{ ip.city }}, {{ ip.region }}</div>
+          <div class="mr-1">{{ ip.city }}, {{ ip.region_name }}</div>
         </div>
         <div v-b-toggle.collapse-1>
           <span class="opened">

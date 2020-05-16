@@ -17,5 +17,5 @@
   * [MDN:Selection](https://developer.mozilla.org/en-US/docs/Web/API/Selection)
   * [Vue Class & Style Bindings](https://vuejs.org/v2/guide/class-and-style.html)
   * [Hipster Ipsum](https://hipsum.co/)
-  * [ipapi](https://ipapi.co/)
+  * [ipapi](https://ipapi.com/)
   * [OpenWeather](https://openweathermap.org/api)

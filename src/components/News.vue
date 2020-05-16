@@ -39,6 +39,7 @@ export default {
     return {
       newsApiKey: '3541fbfb60064ba4a89453bfdb61f3c9',
       weatherApiKey: '589ce3ee2bf5caac88863b07d4f33815',
+      ipapiKey: '87424963eed5d0d15e836caf5ac5e38d',
       weatherUrlBase: 'https://api.openweathermap.org/data/2.5/',
       articles: [],
       errors: [],
@@ -47,7 +48,8 @@ export default {
       long: '',
       ip: {},
       weather: {},
-      weatherIcon: ''
+      weatherIcon: '',
+      ipAddress: ''
     }
   },
   components: {
@@ -84,7 +86,6 @@ export default {
         .then(res => {
           this.weather = res
           this.weatherIcon = res.current.weather[0].icon
-          // console.log(this.weather)
         })
     }
   },
@@ -92,12 +93,13 @@ export default {
     await Promise.all([
       fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
       // fetch('http://newsapi.org/v2/everything?domains=wsj.com&apiKey=' + this.newsApiKey),
-      fetch('https://ipapi.co/json')
+      // fetch('https://ipapi.co/json/')
+      fetch('https://api.ipify.org?format=json')
     ])
       .then(async ([newsApi, ipApi]) => {
         const news = await newsApi.json()
         const ip = await ipApi.json()
-        console.log(news)
+        //
         return [news, ip]
       })
       .then(response => {
@@ -106,12 +108,16 @@ export default {
           data.description !== null &&
           data.description !== ''
         )
-        this.ip = response[1]
-        this.lat = response[1].latitude
-        this.long = response[1].longitude
+        this.ipAddress = response[1].ip
       })
-
-    this.getWeather()
+    fetch(`http://api.ipapi.com/api/${this.ipAddress}?access_key=` + this.ipapiKey)
+      .then(response => response.json())
+      .then(data => {
+        this.ip = data
+        this.lat = data.latitude
+        this.long = data.longitude
+        this.getWeather()
+      })
   },
   computed: {
     currentRoute () {
