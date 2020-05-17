@@ -202,5 +202,10 @@ export default {
     .caret {
       display: none;
     }
+  @media screen and (max-width: 375px) {
+    .brand {
+      margin-top: 35px;
+    }
+  }
 }
 </style>

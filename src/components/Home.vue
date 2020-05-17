@@ -112,4 +112,9 @@ export default {
   .home-cont {
     min-height: 100vh;
   }
+  @media screen and (max-width: 375px) {
+    .header-margin {
+      margin-top: 30px;
+    }
+  }
 </style>

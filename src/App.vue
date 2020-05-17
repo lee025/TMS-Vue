@@ -39,4 +39,9 @@ export default {
 .header-margin {
   margin-top: 75px;
 }
+@media screen and (max-width: 375px) {
+  .header-margin {
+    margin-top: 100px;
+  }
+}
 </style>

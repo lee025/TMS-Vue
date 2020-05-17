@@ -17,7 +17,7 @@
         </b-nav-text>
       </b-navbar-nav>
     </b-collapse>
-    <b-button v-if="$route.name === 'News'" size="sm" v-b-toggle.sidebar-right>View Highlights</b-button>
+    <b-button class="highlight-btn" v-if="$route.name === 'News' || $route.name === 'Grid'" size="sm" v-b-toggle.sidebar-right>View Highlights</b-button>
   </b-navbar>
 </template>
 
@@ -30,5 +30,13 @@ export default {
   a:hover {
     text-decoration: none;
     filter:brightness(85%)
+  }
+  @media screen and (max-width: 375px) {
+    .highlight-btn {
+      /* display: none; */
+      border: none;
+      background: inherit;
+      margin-left: auto;
+    }
   }
 </style>
