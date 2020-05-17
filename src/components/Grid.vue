@@ -7,6 +7,8 @@
       v-bind:ip="ip"
     />
   </b-container>
+  <div class="brand-border-bottom"></div>
+  <!--  -->
   <div class="container-grid">
     <div class="header">I'm the Header • Sort by Sections</div>
     <Highlights v-bind:highlights="highlights"/>
@@ -193,34 +195,148 @@ export default {
 </script>
 
 <style scoped>
-    .container-grid {
-      font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
-      display: grid;
-      grid-template-columns: 10fr 5fr;
-      grid-template-areas:
-        "header header"
-        "content sidebar";
-    }
+  .brand-border-bottom {
+    border-bottom: 1px solid #343a40;
+    margin-bottom: .5rem;
+    width: 100%;
+  }
+  .container-grid {
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    display: grid;
+    grid-template-columns: 10fr 5fr;
+    grid-template-areas:
+      "header header"
+      "content sidebar";
+  }
 
-    .header {
-      grid-area: header;
-      border-bottom-style: double;
-      padding-bottom: 2px;
-    }
+  .header {
+    grid-area: header;
+    border-bottom-style: double;
+    padding-bottom: 2px;
+  }
 
-    .articles-main {
-      display: grid;
-      grid-gap: 20px;
-      grid-area: content;
-      margin: 1rem 0;
-      padding: 10px;
-    }
+  .articles-main {
+    display: grid;
+    grid-gap: 20px;
+    grid-area: content;
+    margin: 1rem 0;
+    padding: 10px;
+  }
 
-    .articles-main-cont {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-    }
+  .articles-main-cont {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
 
+  .article {
+    background: rgba(255, 255, 255, 0.2);
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0px 5px 3px -1px rgba(0,0,0,0.3);
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    color: black;
+    font-weight: 100;
+  }
+  .article-img {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .articles-main-cont .article:nth-child(8n+1) {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .articles-main-cont .article:nth-child(8n+1) img{
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .articles-main-cont .article:nth-child(8n+1) div {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .articles-main-cont .article:nth-child(8n+2) img,
+  .articles-main-cont .article:nth-child(8n+3) img,
+  .articles-main-cont .article:nth-child(8n+6) img,
+  .articles-main-cont .article:nth-child(8n+8) img {
+    display: none;
+  }
+  .articles-main-cont .article:nth-child(8n+2) div,
+  .articles-main-cont .article:nth-child(8n+3) div,
+  .articles-main-cont .article:nth-child(8n+6) div,
+  .articles-main-cont .article:nth-child(8n+8) div {
+    grid-column: span 2;;
+  }
+  .articles-main-cont .article:nth-child(8n+4),
+  .articles-main-cont .article:nth-child(8n+5) {
+    grid-column: span 2;
+  }
+  .articles-main-cont .article:nth-child(8n+7) {
+    grid-row: span 2;
+  }
+  .articles-main-cont .article:nth-child(8n+7) img {
+    grid-column: span 2;
+    grid-row: 1;
+  }
+  .articles-main-cont .article:nth-child(8n+7) div {
+    grid-column: span 2;
+    grid-row: 2;
+  }
+
+  .sidebar-header {
+    border-bottom: 1px solid #343a40;
+    margin-bottom: 1rem;
+  }
+  .sidebar-main {
+    grid-area: sidebar;
+    grid-gap: 20px;
+    margin: 1rem 0;
+    padding: 10px;
+  }
+  .sidebar {
+    background: rgba(255, 255, 255, 0.2);
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
+    box-shadow: 0px 5px 3px -1px rgba(0,0,0,0.3);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    margin: 10px 0;
+    color: black;
+    font-weight: 100;
+  }
+
+  @media screen and (max-width: 675px) {
+    .sidebar-main {
+      display: none;
+    }
+  }
+  @media screen and (max-width: 375px) {
+    .sidebar-main {
+      display: none;
+    }
+    .articles-main-cont .article,
+    .articles-main-cont .article:nth-child(8n+1),
+    .articles-main-cont .article:nth-child(8n+1) img,
+    .articles-main-cont .article:nth-child(8n+1) div {
+      grid-column: span 2;
+    }
+    .articles-main-cont .article:nth-child(8n+2) img,
+    .articles-main-cont .article:nth-child(8n+3) img,
+    .articles-main-cont .article:nth-child(8n+4) img,
+    .articles-main-cont .article:nth-child(8n+5) img,
+    .articles-main-cont .article:nth-child(8n+6) img,
+    .articles-main-cont .article:nth-child(8n+8) img {
+      display: block;
+      grid-column: span 2;
+    }
+    .articles-main-cont .article:nth-child(8n+4) div,
+    .articles-main-cont .article:nth-child(8n+5) div {
+      grid-column: span 2;
+    }
     .article {
       background: rgba(255, 255, 255, 0.2);
       /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
@@ -233,72 +349,5 @@ export default {
       color: black;
       font-weight: 100;
     }
-    .article-img {
-      width: 100%;
-      padding: 10px;
-    }
-
-    .articles-main-cont .article:nth-child(8n+1) {
-      grid-column: span 1;
-      grid-row: span 2;
-    }
-    .articles-main-cont .article:nth-child(8n+1) img{
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-    .articles-main-cont .article:nth-child(8n+1) div {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
-    .articles-main-cont .article:nth-child(8n+2) img,
-    .articles-main-cont .article:nth-child(8n+3) img,
-    .articles-main-cont .article:nth-child(8n+6) img,
-    .articles-main-cont .article:nth-child(8n+8) img {
-      display: none;
-    }
-    .articles-main-cont .article:nth-child(8n+2) div,
-    .articles-main-cont .article:nth-child(8n+3) div,
-    .articles-main-cont .article:nth-child(8n+6) div,
-    .articles-main-cont .article:nth-child(8n+8) div {
-      grid-column: span 2;;
-    }
-    .articles-main-cont .article:nth-child(8n+4),
-    .articles-main-cont .article:nth-child(8n+5) {
-      grid-column: span 2;
-    }
-    .articles-main-cont .article:nth-child(8n+7) {
-      grid-row: span 2;
-    }
-    .articles-main-cont .article:nth-child(8n+7) img {
-      grid-column: span 2;
-      grid-row: 1;
-    }
-    .articles-main-cont .article:nth-child(8n+7) div {
-      grid-column: span 2;
-      grid-row: 2;
-    }
-
-    .sidebar-header {
-      border-bottom: 1px solid #343a40;
-      margin-bottom: 1rem;
-    }
-    .sidebar-main {
-      grid-area: sidebar;
-      grid-gap: 20px;
-      margin: 1rem 0;
-      padding: 10px;
-    }
-    .sidebar {
-      background: rgba(255, 255, 255, 0.2);
-      /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); */
-      box-shadow: 0px 5px 3px -1px rgba(0,0,0,0.3);
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      grid-gap: 10px;
-      align-items: center;
-      padding: 10px;
-      margin: 10px 0;
-      color: black;
-      font-weight: 100;
-    }
+  }
 </style>
