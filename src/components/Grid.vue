@@ -32,64 +32,25 @@
               <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
               <b-button @click="readMore(article.url)">Read More</b-button>
           </div>
-        <!--  -->
         </div>
       </div>
+      <!--  -->
     </div>
     <!-- Begin Sidebar -->
     <div class="sidebar-main">
-      <h2 class="sidebar-header">I'm the Sidebar</h2>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=1">
+      <h2 class="sidebar-header">NY Times Headlines</h2>
+      <!--  -->
+      <div  v-for="(nyt, idx) in nyTimesArticles" :key="`article-${idx}`" class="sidebar">
+        <!-- <img class="article-img" :src="`${nyt.multimedia[0].url}`"> -->
         <div class="article-details">
-          <h2>Title-SB1</h2>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed sint doloremque repellat, iste debitis.</p>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, excepturi!</p>
+          <h5><strong>{{ nyt.title }}</strong></h5>
+            <p class="article-desc" @click="highlight(nyt, $event)"
+              v-html="nyt.abstract.replace(/(<([^>]+)>)/ig, '')"></p>
+              <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
+              <b-button @click="readMore(nyt.url)">Read More</b-button>
         </div>
       </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB2</h2>
-          <p class="article-desc">short.</p>
-        </div>
-      </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB3</h2>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis, excepturi!</p>
-        </div>
-      </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB4</h2>
-          <p class="article-desc">short.</p>
-        </div>
-      </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB5</h2>
-          <p class="article-desc">sLorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed sint doloremque repellat, iste debitis.</p>
-        </div>
-      </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB6</h2>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed sint doloremque repellat, iste debitis.</p>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed sint doloremque repellat, iste debitis.</p>
-        </div>
-      </div>
-      <div class="sidebar">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h2>Title-SB7</h2>
-          <p class="article-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum sed sint doloremque repellat, iste debitis.</p>
-        </div>
-      </div>
+      <!--  -->
     </div>
   <!--  -->
   </div>
@@ -106,6 +67,8 @@ export default {
     return {
       newsApiKey: '3541fbfb60064ba4a89453bfdb61f3c9',
       weatherApiKey: '589ce3ee2bf5caac88863b07d4f33815',
+      nyTimesApiKey: 'BdJBA2Un1t0ARhGPyKG5Z5KaWxgsKTe6',
+      nyTimesUrlBase: 'https://api.nytimes.com/svc/topstories/v2',
       ipapiKey: '87424963eed5d0d15e836caf5ac5e38d',
       weatherUrlBase: 'https://api.openweathermap.org/data/2.5/',
       articles: [],
@@ -116,7 +79,8 @@ export default {
       ip: {},
       weather: {},
       weatherIcon: '',
-      ipAddress: ''
+      ipAddress: '',
+      nyTimesArticles: []
     }
   },
   components: {
@@ -159,15 +123,17 @@ export default {
   async created () {
     await Promise.all([
       fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
+      fetch(`${this.nyTimesUrlBase}/home.json?api-key=${this.nyTimesApiKey}`),
       // fetch('http://newsapi.org/v2/everything?domains=wsj.com&apiKey=' + this.newsApiKey),
       // fetch('https://ipapi.co/json/')
       fetch('https://api.ipify.org?format=json')
     ])
-      .then(async ([newsApi, ipApi]) => {
+      .then(async ([newsApi, nyTimes, ipApi]) => {
         const news = await newsApi.json()
+        const nyt = await nyTimes.json()
         const ip = await ipApi.json()
         //
-        return [news, ip]
+        return [news, nyt, ip]
       })
       .then(response => {
         this.articles = response[0].articles.filter(data =>
@@ -175,7 +141,9 @@ export default {
           data.description !== null &&
           data.description !== ''
         )
-        this.ipAddress = response[1].ip
+        this.nyTimesArticles = response[1].results.slice(0, 20)
+        console.log('nyTimesArticles:', this.nyTimesArticles)
+        this.ipAddress = response[2].ip
       })
     fetch(`http://api.ipapi.com/api/${this.ipAddress}?access_key=` + this.ipapiKey)
       .then(response => response.json())
@@ -307,6 +275,9 @@ export default {
     margin: 10px 0;
     color: black;
     font-weight: 100;
+  }
+  .sidebar .article-details {
+    grid-column: span 2;
   }
 
   @media screen and (max-width: 675px) {
