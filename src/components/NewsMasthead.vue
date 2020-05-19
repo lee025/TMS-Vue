@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="brand mb-0">NewsAPI</h1>
+    <h1 class="brand mb-0">NYTimesAPI</h1>
     <div class="brand-sub">
       <span >"Democracy Dies in Darkness"</span>
       <small>- WashingtonPost</small>

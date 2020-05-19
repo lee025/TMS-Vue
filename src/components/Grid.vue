@@ -14,43 +14,49 @@
     <Highlights v-bind:highlights="highlights"/>
     <!-- Begin Container GTA -->
     <div class="articles-main">
-      <div class="article a1">
-        <img class="article-img" src="https://source.unsplash.com/random/300x300?v=2">
-        <div class="article-details">
-          <h3>Title-Top Story</h3>
-          <p class="article-desc">First/published_date/created_date/updated_date/</p>
-        </div>
-      </div>
-      <!--  -->
       <div class="articles-main-cont">
-        <div v-for="(article, idx) in articles" :key="`article-${idx}`" :class="`article aa${idx}`">
-          <img class="article-img" :src="`${article.urlToImage}`">
+        <!-- Begin Card -->
+        <div v-for="(nyt, idx) in nyTimesArticles" :key="`nytArticle-${idx}`" :class="`article aa${idx}`">
+          <img class="article-img" :src="`${nyt.multimedia[0].url}`">
           <div class="article-details">
-            <h4>{{ article.title }}</h4>
-            <p class="article-desc" @click="highlight(article, $event)"
-              v-html="article.description.replace(/(<([^>]+)>)/ig, '')"></p>
-              <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
-              <b-button @click="readMore(article.url)">Read More</b-button>
-          </div>
-        </div>
-      </div>
-      <!--  -->
-    </div>
-    <!-- Begin Sidebar -->
-    <div class="sidebar-main">
-      <h2 class="sidebar-header">NY Times Headlines</h2>
-      <!--  -->
-      <div  v-for="(nyt, idx) in nyTimesArticles" :key="`article-${idx}`" class="sidebar">
-        <!-- <img class="article-img" :src="`${nyt.multimedia[0].url}`"> -->
-        <div class="article-details">
-          <h5><strong>{{ nyt.title }}</strong></h5>
+            <h4>{{ nyt.title }}</h4>
             <p class="article-desc" @click="highlight(nyt, $event)"
               v-html="nyt.abstract.replace(/(<([^>]+)>)/ig, '')"></p>
               <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
               <b-button @click="readMore(nyt.url)">Read More</b-button>
+          </div>
+        </div>
+      <!-- End Card -->
+      </div>
+    </div>
+    <!-- Begin Sidebar -->
+    <div class="sidebar-main">
+      <!-- Begin Indexes -->
+      <div class="majors-idxs-cont">
+          <div class="idx-name">
+            <div class="idx-border">DOW</div>
+            <div class="idx-border">NASDAQ</div>
+            <div>S&P 500</div>
+          </div>
+          <div class="percent-change" v-bind:style="{ color: color }">
+            <div v-if="indexes[0]" class="idx-border">{{ priceStatus(indexes[0]) }}</div>
+            <div v-if="indexes[1]" class="idx-border">{{ priceStatus(indexes[1]) }}</div>
+            <div v-if="indexes[2]">{{ priceStatus(indexes[2]) }}</div>
+          </div>
+      </div>
+      <!-- End Indexes -->
+      <h2 class="sidebar-header">NewsAPI Headlines</h2>
+      <!-- Begin Card -->
+      <div v-for="(article, idx) in articles" :key="`article-${idx}`" class="sidebar">
+        <div class="article-details">
+          <h5><strong>{{ article.title }}</strong></h5>
+            <p class="article-desc" @click="highlight(article, $event)"
+              v-html="article.description.replace(/(<([^>]+)>)/ig, '')"></p>
+              <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
+              <b-button @click="readMore(article.url)">Read More</b-button>
         </div>
       </div>
-      <!--  -->
+      <!-- End Card -->
     </div>
   <!--  -->
   </div>
@@ -68,6 +74,8 @@ export default {
       newsApiKey: '3541fbfb60064ba4a89453bfdb61f3c9',
       weatherApiKey: '589ce3ee2bf5caac88863b07d4f33815',
       nyTimesApiKey: 'BdJBA2Un1t0ARhGPyKG5Z5KaWxgsKTe6',
+      fmpApiKey: 'a7838dbefd220833441a6005a67005d0',
+      fmpURLBase: 'https://financialmodelingprep.com/api/v3',
       nyTimesUrlBase: 'https://api.nytimes.com/svc/topstories/v2',
       ipapiKey: '87424963eed5d0d15e836caf5ac5e38d',
       weatherUrlBase: 'https://api.openweathermap.org/data/2.5/',
@@ -80,7 +88,11 @@ export default {
       weather: {},
       weatherIcon: '',
       ipAddress: '',
-      nyTimesArticles: []
+      nyTimesArticles: [],
+      indexes: [],
+      color: 'black',
+      symbol: '',
+      plusMinus: ''
     }
   },
   components: {
@@ -118,22 +130,34 @@ export default {
           this.weather = res
           this.weatherIcon = res.current.weather[0].icon
         })
+    },
+    priceStatus: function (value) {
+      if (value.changesPercentage <= 0) {
+        this.plusMinus = '-'
+        this.color = 'red'
+        this.symbol = '⇣'
+      } else {
+        this.plusMinus = '+'
+        this.color = 'green'
+        this.symbol = '⇡'
+      }
+      return this.plusMinus + value.changesPercentage + this.symbol
     }
   },
   async created () {
     await Promise.all([
       fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
       fetch(`${this.nyTimesUrlBase}/home.json?api-key=${this.nyTimesApiKey}`),
-      // fetch('http://newsapi.org/v2/everything?domains=wsj.com&apiKey=' + this.newsApiKey),
-      // fetch('https://ipapi.co/json/')
+      fetch(`${this.fmpURLBase}/quotes/index`),
       fetch('https://api.ipify.org?format=json')
     ])
-      .then(async ([newsApi, nyTimes, ipApi]) => {
+      .then(async ([newsApi, nyTimes, majorsIdxs, ipApi]) => {
         const news = await newsApi.json()
         const nyt = await nyTimes.json()
+        const idxs = await majorsIdxs.json()
         const ip = await ipApi.json()
         //
-        return [news, nyt, ip]
+        return [news, nyt, idxs, ip]
       })
       .then(response => {
         this.articles = response[0].articles.filter(data =>
@@ -142,8 +166,9 @@ export default {
           data.description !== ''
         )
         this.nyTimesArticles = response[1].results.slice(0, 20)
-        console.log('nyTimesArticles:', this.nyTimesArticles)
-        this.ipAddress = response[2].ip
+        const majors = ['Dow Jones Industrial Average', 'NASDAQ Composite', 'S&P 500']
+        this.indexes = response[2].filter(data => majors.includes(data.name))
+        this.ipAddress = response[3].ip
       })
     fetch(`http://api.ipapi.com/api/${this.ipAddress}?access_key=` + this.ipapiKey)
       .then(response => response.json())
@@ -175,6 +200,33 @@ export default {
     grid-template-areas:
       "header header"
       "content sidebar";
+  }
+
+  .majors-idxs-cont {
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0px 5px 3px -1px rgba(0,0,0,0.3);
+    padding: 10px;
+    margin-bottom: 1rem;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      "name change";
+  }
+  .idx-name {
+    grid-area: name;
+    grid-column: 1;
+    padding-left: 2rem;
+  }
+  .percent-change {
+    grid-area: change;
+    grid-column: 2;
+    padding-right: 2rem;
+  }
+  .idx-border {
+    border-bottom: 1px solid gray;
   }
 
   .header {
