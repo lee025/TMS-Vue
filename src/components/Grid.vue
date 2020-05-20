@@ -151,7 +151,7 @@ export default {
     await Promise.all([
       fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
       fetch(`${this.nyTimesUrlBase}/home.json?api-key=${this.nyTimesApiKey}`),
-      fetch(`${this.fmpURLBase}/quotes/index`),
+      fetch(`${this.fmpURLBase}/quotes/index?apikey=${this.fmpApiKey}`),
       fetch('https://api.ipify.org?format=json')
     ])
       .then(async ([newsApi, nyTimes, majorsIdxs, ipApi]) => {
