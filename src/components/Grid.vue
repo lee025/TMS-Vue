@@ -19,7 +19,7 @@
         <div v-for="(nyt, idx) in nyTimesArticles" :key="`nytArticle-${idx}`" :class="`article aa${idx}`">
           <img class="article-img" :src="`${nyt.multimedia[0].url}`">
           <div class="article-details">
-            <h4>{{ nyt.title }}</h4>
+            <h5>{{ nyt.title }}</h5>
             <p class="article-desc" @click="highlight(nyt, $event)"
               v-html="nyt.abstract.replace(/(<([^>]+)>)/ig, '')"></p>
               <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
@@ -33,16 +33,18 @@
     <div class="sidebar-main">
       <!-- Begin Indexes -->
       <div class="majors-idxs-cont">
+        <div class="idx-name-col">
           <div class="idx-name">
-            <div class="idx-border">DOW</div>
-            <div class="idx-border">NASDAQ</div>
-            <div>S&P 500</div>
+              <div class="pr-4"><div class="idx-border">DOW</div></div>
+              <div class="pr-4"><div class="idx-border">NASDAQ</div></div>
+              <div class="pr-4"><div>S&P 500</div></div>
           </div>
-          <div class="percent-change" v-bind:style="{ color: color }">
-            <div v-if="indexes[0]" class="idx-border">{{ priceStatus(indexes[0]) }}</div>
-            <div v-if="indexes[1]" class="idx-border">{{ priceStatus(indexes[1]) }}</div>
-            <div v-if="indexes[2]">{{ priceStatus(indexes[2]) }}</div>
+        </div>
+        <div class="pr-4" v-bind:style="{ color: color }" >
+          <div v-for="(pct, i) in percentages" :key="`pct-${i}`" class="idx-border">
+            <div v-if="indexes">{{ priceStatus(pct) }}</div>
           </div>
+        </div>
       </div>
       <!-- End Indexes -->
       <h2 class="sidebar-header">NewsAPI Headlines</h2>
@@ -90,9 +92,10 @@ export default {
       ipAddress: '',
       nyTimesArticles: [],
       indexes: [],
+      percentages: [],
       color: 'black',
       symbol: '',
-      plusMinus: ''
+      plus: '+'
     }
   },
   components: {
@@ -132,16 +135,16 @@ export default {
         })
     },
     priceStatus: function (value) {
-      if (value.changesPercentage <= 0) {
-        this.plusMinus = '-'
+      if (value <= 0) {
         this.color = 'red'
         this.symbol = '⇣'
+        return value + this.symbol
       } else {
         this.plusMinus = '+'
         this.color = 'green'
         this.symbol = '⇡'
+        return this.plusMinus + value + this.symbol
       }
-      return this.plusMinus + value.changesPercentage + this.symbol
     }
   },
   async created () {
@@ -156,7 +159,7 @@ export default {
         const nyt = await nyTimes.json()
         const idxs = await majorsIdxs.json()
         const ip = await ipApi.json()
-        //
+        // console.log(idxs)
         return [news, nyt, idxs, ip]
       })
       .then(response => {
@@ -168,6 +171,7 @@ export default {
         this.nyTimesArticles = response[1].results.slice(0, 20)
         const majors = ['Dow Jones Industrial Average', 'NASDAQ Composite', 'S&P 500']
         this.indexes = response[2].filter(data => majors.includes(data.name))
+        this.indexes.forEach((idx, i) => this.percentages.push(idx.changesPercentage))
         this.ipAddress = response[3].ip
       })
     fetch(`http://api.ipapi.com/api/${this.ipAddress}?access_key=` + this.ipapiKey)
@@ -218,12 +222,14 @@ export default {
   .idx-name {
     grid-area: name;
     grid-column: 1;
-    padding-left: 2rem;
+    padding-left: 1.5rem;
   }
-  .percent-change {
-    grid-area: change;
-    grid-column: 2;
-    padding-right: 2rem;
+  .idx-name-col {
+    grid-area: name;
+    grid-column: 1;
+  }
+  .idx-border:nth-child(3) {
+    border-bottom: none;
   }
   .idx-border {
     border-bottom: 1px solid gray;

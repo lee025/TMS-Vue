@@ -21,3 +21,4 @@
   * [ipify API](https://www.ipify.org/)
   * [OpenWeather API](https://openweathermap.org/api)
   * [NYTimes API](https://developer.nytimes.com/)
+  * [FMP API](https://financialmodelingprep.com/)
