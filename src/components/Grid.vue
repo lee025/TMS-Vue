@@ -1,41 +1,41 @@
 <template>
-<b-container fluid>
-  <b-container>
-    <NewsMasthead
-      v-bind:weather="weather"
-      v-bind:weatherIcon="weatherIcon"
-      v-bind:ip="ip"
-    />
-  </b-container>
-  <div class="brand-border-bottom"></div>
-  <!--  -->
-  <div class="container-grid">
-    <div class="header">I'm the Header • Sort by Sections</div>
-    <Highlights v-bind:highlights="highlights"/>
-    <!-- Begin Container GTA -->
-    <div class="articles-main">
-      <div class="articles-main-cont">
-        <!-- Begin Card -->
-        <div v-for="(nyt, idx) in nyTimesArticles" :key="`nytArticle-${idx}`" :class="`article aa${idx}`">
-          <img class="article-img" :src="`${nyt.multimedia[0].url}`">
-          <div class="article-details">
-            <h5>{{ nyt.title }}</h5>
-            <p class="article-desc" @click="highlight(nyt, $event)"
-              v-html="nyt.abstract.replace(/(<([^>]+)>)/ig, '')"></p>
-              <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
-              <b-button @click="readMore(nyt.url)">Read More</b-button>
+  <b-container fluid>
+    <b-container>
+      <NewsMasthead
+        v-bind:weather="weather"
+        v-bind:weatherIcon="weatherIcon"
+        v-bind:ip="ip"
+      />
+    </b-container>
+    <div class="brand-border-bottom"></div>
+    <!--  -->
+    <div class="container-grid">
+      <div class="header">I'm the Header • Sort by Sections</div>
+      <Highlights v-bind:highlights="highlights"/>
+      <!-- Begin Container GTA -->
+      <div class="articles-main">
+        <div class="articles-main-cont">
+          <!-- Begin Card -->
+          <div v-for="(nyt, idx) in nyTimesArticles" :key="`nytArticle-${idx}`" :class="`article aa${idx}`">
+            <img class="article-img" :src="`${nyt.multimedia[0].url}`">
+            <div class="article-details">
+              <h5>{{ nyt.title }}</h5>
+              <p class="article-desc" @click="highlight(nyt, $event)"
+                v-html="nyt.abstract.replace(/(<([^>]+)>)/ig, '')"></p>
+                <b-button class="my-1" @click="highlightBtn">Highlight</b-button>
+                <b-button @click="readMore(nyt.url)">Read More</b-button>
+            </div>
           </div>
+        <!-- End Card -->
         </div>
-      <!-- End Card -->
       </div>
+      <Sidebar
+        v-bind:articles="articles"
+        v-bind:percentages="percentages"
+        v-bind:highlights="highlights"
+      />
     </div>
-    <Sidebar
-      v-bind:articles="articles"
-      v-bind:percentages="percentages"
-      v-bind:highlights="highlights"
-    />
-  </div>
-</b-container>
+  </b-container>
 </template>
 
 <script>
@@ -86,8 +86,9 @@ export default {
     }
   },
   async created () {
+    const proxy = 'https://cors-anywhere.herokuapp.com/'
     await Promise.all([
-      fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
+      fetch(proxy + 'http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
       fetch(`${this.nyTimesUrlBase}/home.json?api-key=${this.nyTimesApiKey}`),
       fetch(`${this.fmpURLBase}/quotes/index?apikey=${this.fmpApiKey}`),
       fetch('https://api.ipify.org?format=json')
