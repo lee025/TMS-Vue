@@ -90,8 +90,9 @@ export default {
     }
   },
   async created () {
+    const proxy = 'https://cors-anywhere.herokuapp.com/'
     await Promise.all([
-      fetch('http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
+      fetch(proxy + 'http://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=' + this.newsApiKey),
       // fetch('http://newsapi.org/v2/everything?domains=wsj.com&apiKey=' + this.newsApiKey),
       // fetch('https://ipapi.co/json/')
       fetch('https://api.ipify.org?format=json')
