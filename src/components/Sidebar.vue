@@ -9,9 +9,10 @@
             <div class="pr-4"><div>S&P 500</div></div>
         </div>
       </div>
-      <div class="pr-4" v-bind:style="{ color: color }" >
-        <div v-for="(pct, i) in percentages" :key="`pct-${i}`" class="idx-border">
-          <div>{{ priceStatus(pct) }}</div>
+      <div class="pr-4" >
+        <div v-for="(value, i) in percentages" :key="`value-${i}`" class="idx-border"
+            :class="{'green': value > 0, 'red': value <= 0}">
+          {{ priceStatus(value) }}
         </div>
       </div>
     </div>
@@ -38,27 +39,27 @@ export default {
   mixins: [mixin],
   data () {
     return {
-      color: 'black',
-      symbol: '',
-      plus: '+'
+      color: '',
+      plus: '+',
+      inc: '⇡',
+      dec: '⇣'
     }
   },
   methods: {
     priceStatus: function (value) {
       if (value <= 0) {
-        this.color = 'red'
-        this.symbol = '⇣'
-        return value + this.symbol
+        return value + ' ' + this.dec
       } else {
-        this.color = 'green'
-        this.symbol = '⇡'
-        return this.plus + value + this.symbol
+        return this.plus + value + ' ' + this.inc
       }
     }
   },
   computed: {
     currentRoute () {
       return this.$route.name
+    },
+    changes () {
+      return this.percentages.map(value => this.priceStatus(value))
     }
   }
 }
@@ -118,6 +119,13 @@ export default {
   }
   .sidebar .article-details {
     grid-column: span 2;
+  }
+
+  .green {
+    color: green;
+  }
+  .red {
+    color: red;
   }
 
   @media screen and (max-width: 675px) {

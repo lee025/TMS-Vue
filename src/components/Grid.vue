@@ -98,7 +98,7 @@ export default {
         const nyt = await nyTimes.json()
         const idxs = await majorsIdxs.json()
         const ip = await ipApi.json()
-        // console.log(idxs)
+
         return [news, nyt, idxs, ip]
       })
       .then(response => {
